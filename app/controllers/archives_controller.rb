@@ -33,6 +33,15 @@ class ArchivesController < ApplicationController
     end
   end
 
+  def update_categories
+    if @archive.update(archive_params)
+      redirect_to @archive
+    else
+      errors_to_flash(@archive)
+      render 'edit_categories'
+    end
+  end
+
   def destroy
     @archive.destroy
     redirect_to archives_path
@@ -45,6 +54,9 @@ class ArchivesController < ApplicationController
   end
 
   def archive_params
-    params.require(:archive).permit(:title, :body, :cover_image, :sns_image)
+    params.require(:archive).permit(
+      :title, :body, :cover_image, :sns_image,
+      categories_attributes: [ :id, :slug, :name, :desc, :_destroy, children_attributes: [ :archive_id, :id, :slug, :name, :desc, :_destroy ] ] )
+    )
   end
 end
