@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  root 'pages#home'
+  root 'archives#index'
 
   devise_for :users
+
+  resources :archives
 end

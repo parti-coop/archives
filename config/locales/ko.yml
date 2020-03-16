@@ -16,11 +16,14 @@ ko:
 
   site_name: 아카이브즈.ws
   menu:
+    archives: 전체목록
     tags: 태그
     search: 검색
-  main:
-    title: 아카이브즈
+  title:
+    main: 아카이브
+    recent_updates: 최신 데이터
   link:
+    new_archive: 아카이브 시작
     new: 추가
     edit: 수정
     destroy: 삭제

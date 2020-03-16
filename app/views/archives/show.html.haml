@@ -1,0 +1,20 @@
+%h2.pb-2= @archive.title
+
+.my-4.p-3.border.bg-white
+  = raw @archive.body
+
+.my-4
+  .d-flex.justify-content-between
+    %div
+      - if user_signed_in?
+        = link_to t('link.edit'), edit_archive_path(@archive), class: "btn btn-outline-primary"
+    %div
+      - if user_signed_in? && (@archive.user == current_user || current_user.admin?)
+        = link_to t('link.destroy'), @archive, method: :delete, data: { confirm: "정말 삭제하시겠습니까?" }, class: "btn btn-outline-danger"
+
+%hr
+
+.my-4
+  %h5.text-muted= Archive.human_attribute_name("comments")
+  .my-4.p-4.border.bg-white
+    = link_to "아카이브에 관한 의견이 있으세요?", "https://democracy-activists.parti.xyz/p/data_activists", target: "_blank", class: "text-dark"
