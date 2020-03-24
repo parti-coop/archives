@@ -7,7 +7,7 @@ class ArchiveDocument < ApplicationRecord
     remote_content_url category_slug tag_list)
 
   extend Enumerize
-  enumerize :media_type, in: %i(문서 사진 도면 영상 음성)
+  enumerize :media_type, in: %i[문서 사진 도면 영상 음성]
 
   before_save :update_content_attributes
 
