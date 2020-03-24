@@ -56,7 +56,7 @@ class ArchivesController < ApplicationController
   def archive_params
     params.require(:archive).permit(
       :title, :body, :cover_image, :sns_image,
-      categories_attributes: [ :id, :slug, :name, :desc, :_destroy, children_attributes: [ :archive_id, :id, :slug, :name, :desc, :_destroy ] ] )
+      categories_attributes: [ :id, :slug, :name, :desc, :_destroy, children_attributes: [ :archive_id, :id, :slug, :name, :desc, :_destroy ] ]
     )
   end
 end

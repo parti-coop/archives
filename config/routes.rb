@@ -10,5 +10,5 @@ Rails.application.routes.draw do
       get '/categories/:category_slug', to: 'archives#show', as: :category
     end
   end
-  resrouces :archive_documents
+  resources :archive_documents
 end
