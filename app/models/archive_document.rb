@@ -22,7 +22,7 @@ class ArchiveDocument < ApplicationRecord
 
   attr_accessor :google_access_token
 
-  mount_uploader :content, PrivateFileUploader
+  # mount_uploader :content, PrivateFileUploader
 
   validates :title, presence: true
   validates :body, presence: true
