@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_16_050858) do
+ActiveRecord::Schema.define(version: 2020_03_30_233559) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -76,6 +76,33 @@ ActiveRecord::Schema.define(version: 2020_03_16_050858) do
     t.index ["user_id"], name: "index_archive_documents_on_user_id"
   end
 
+  create_table "archive_sewol_inv_documents", force: :cascade do |t|
+    t.integer "archive_document_id"
+    t.string "part_no"
+    t.string "part_name"
+    t.string "code"
+    t.string "doc_no"
+    t.string "report_date"
+    t.string "doc_type"
+    t.string "title"
+    t.string "recipients"
+    t.string "reporter"
+    t.string "reviewer"
+    t.string "has_attachment"
+    t.string "status"
+    t.string "doc_kind"
+    t.string "open_type"
+    t.text "open_level_desc"
+    t.string "open_retype"
+    t.text "open_relevel_desc"
+    t.string "partial_open_redaction"
+    t.string "prod_code_no"
+    t.string "task_card_name"
+    t.string "task_name"
+    t.string "task_storaging_period"
+    t.index ["archive_document_id"], name: "index_archive_sewol_inv_documents_on_archive_document_id"
+  end
+
   create_table "archives", force: :cascade do |t|
     t.string "title", null: false
     t.text "body"
@@ -86,6 +113,52 @@ ActiveRecord::Schema.define(version: 2020_03_16_050858) do
     t.datetime "updated_at", null: false
     t.string "slug"
     t.index ["user_id"], name: "index_archives_on_user_id"
+  end
+
+  create_table "clypits", force: :cascade do |t|
+    t.integer "archive_document_id", null: false
+    t.string "audio_file_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["archive_document_id"], name: "index_clypits_on_archive_document_id"
+    t.index ["audio_file_id"], name: "index_clypits_on_audio_file_id"
+  end
+
+  create_table "roles", force: :cascade do |t|
+    t.string "name"
+    t.string "resource_type"
+    t.bigint "resource_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id"
+    t.index ["resource_type", "resource_id"], name: "index_roles_on_resource_type_and_resource_id"
+  end
+
+  create_table "taggings", id: :serial, force: :cascade do |t|
+    t.integer "tag_id"
+    t.string "taggable_type"
+    t.integer "taggable_id"
+    t.string "tagger_type"
+    t.integer "tagger_id"
+    t.string "context", limit: 128
+    t.datetime "created_at"
+    t.index ["context"], name: "index_taggings_on_context"
+    t.index ["tag_id", "taggable_id", "taggable_type", "context", "tagger_id", "tagger_type"], name: "taggings_idx", unique: true
+    t.index ["tag_id"], name: "index_taggings_on_tag_id"
+    t.index ["taggable_id", "taggable_type", "context"], name: "taggings_taggable_context_idx"
+    t.index ["taggable_id", "taggable_type", "tagger_id", "context"], name: "taggings_idy"
+    t.index ["taggable_id"], name: "index_taggings_on_taggable_id"
+    t.index ["taggable_type"], name: "index_taggings_on_taggable_type"
+    t.index ["tagger_id", "tagger_type"], name: "index_taggings_on_tagger_id_and_tagger_type"
+    t.index ["tagger_id"], name: "index_taggings_on_tagger_id"
+  end
+
+  create_table "tags", id: :serial, force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer "taggings_count", default: 0
+    t.index ["name"], name: "index_tags_on_name", unique: true
   end
 
   create_table "users", force: :cascade do |t|
@@ -120,5 +193,14 @@ ActiveRecord::Schema.define(version: 2020_03_16_050858) do
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
+  create_table "users_roles", id: false, force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "role_id"
+    t.index ["role_id"], name: "index_users_roles_on_role_id"
+    t.index ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id"
+    t.index ["user_id"], name: "index_users_roles_on_user_id"
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "taggings", "tags"
 end

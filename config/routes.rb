@@ -10,5 +10,7 @@ Rails.application.routes.draw do
       get '/categories/:category_slug', to: 'archives#show', as: :category
     end
   end
-  resources :archive_documents
+  resources :archive_documents do
+    get :download, on: :member
+  end
 end

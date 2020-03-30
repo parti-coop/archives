@@ -5,6 +5,9 @@
 
     %p.card-text
       %small= strip_tags(archive.body).truncate(150)
+      %br
+      %small
+        #{archive.documents.count}개의 자료
   .card-footer
     %small.text-muted
       %i.far.fa-clock

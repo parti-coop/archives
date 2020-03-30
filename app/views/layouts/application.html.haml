@@ -11,7 +11,7 @@
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
     %script{crossorigin: "anonymous", src: "https://kit.fontawesome.com/d1995cff7d.js"}
   %body.bg-light
-    = render "header"
+    = render "application/header"
 
     - if current_page?(root_url)
       %header

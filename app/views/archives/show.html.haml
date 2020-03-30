@@ -12,6 +12,10 @@
       - if user_signed_in? && (@archive.user == current_user || current_user.admin?)
         = link_to t('link.destroy'), @archive, method: :delete, data: { confirm: "정말 삭제하시겠습니까?" }, class: "btn btn-outline-danger"
 
+  %hr
+
+  = render 'archive_documents/list', archive: @archive
+
 %hr
 
 .my-4

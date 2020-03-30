@@ -14,7 +14,6 @@ class ArchiveDocument < ApplicationRecord
   belongs_to :user
   belongs_to :archive
   belongs_to :category, class_name: 'ArchiveCategory', optional: true, primary_key: :slug, foreign_key: :category_slug
-  has_many :comments, as: :commentable
   has_one :clypit, dependent: :destroy
   has_one :sewol_inv_document, dependent: :nullify, class_name: 'Archive::SewolInvDocument'
   has_one :additional, class_name: 'NposAddtionalArchiveDocument'
