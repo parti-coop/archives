@@ -5,14 +5,11 @@ class ArchiveDocumentsController < ApplicationController
     @archive = @archive_document.archive
     @documents = params[:tag].present? ? @archive.documents.tagged_with(params[:tag]) : @archive.documents
     @documents = @documents.page(params[:page])
-    render "archive_documents/#{@archive.slug}/show"
   end
 
   def new
     @archive ||= Archive.find(params[:archive_id])
     @archive_document.archive = @archive
-    @current_organization = @archive.organization
-    render "archive_documents/#{@archive.slug}/new"
   end
 
   def create
@@ -20,22 +17,22 @@ class ArchiveDocumentsController < ApplicationController
     if @archive_document.save
       redirect_to archive_path(@archive_document.archive)
     else
-      errors_to_flash(@archive_document)
+      errors_to_flash_now(@archive_document)
       @archive = @archive_document.archive
-      render "archive_documents/#{@archive.slug}/new"
+      render :new
     end
   end
 
   def edit
     @archive = @archive_document.archive
-    render "archive_documents/#{@archive.slug}/edit"
   end
 
   def update
     if @archive_document.update(archive_document_params)
       redirect_to @archive_document
     else
-      render "archive_documents/#{@archive.slug}/edit"
+      errors_to_flash_now(@archive_document)
+      render :edit
     end
   end
 
@@ -45,15 +42,7 @@ class ArchiveDocumentsController < ApplicationController
   end
 
   def download
-    raise ActionController::RoutingError.new('Not Found')
-    # if @archive_document.content.file.respond_to?(:url)
-    #   # s3
-    #   data = open @archive_document.content.url
-    #   send_data data.read, filename: encoded_file_name(@archive_document), disposition: 'attachment', stream: 'true', buffer_size: '4096'
-    # else
-    #   # local storage
-    #   send_file @archive_document.content.path, filename: encoded_file_name(@archive_document), disposition: 'attachment'
-    # end
+    send_data @archive_document.content.download, filename: @archive_document.content.filename, content_type: @archive_document.content.content_type, disposition: 'attachment', stream: 'true', buffer_size: '4096'
   end
 
   private
@@ -64,9 +53,8 @@ class ArchiveDocumentsController < ApplicationController
       :title, :body, :tag_list,
       :content_creator, :content_created_date, :content_created_time,
       :content_source, :content_recipients,
-      :content, :media_type, :content_cache, :remove_content,
-      :category_slug, :donor, :is_secret_donor,
-      additional_attributes: [:id, :sub_region, :address, :zipcode, :homepage, :tel, :fax, :leader, :leader_tel, :email, :business_area, :open_year, :members_count, :workers_count, :finance]
+      :content, :media_type, :remove_content,
+      :category_slug, :donor, :is_secret_donor
     )
   end
 end

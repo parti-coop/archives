@@ -12,6 +12,9 @@
     %script{crossorigin: "anonymous", src: "https://kit.fontawesome.com/d1995cff7d.js"}
   %body.bg-light
     = render "application/header"
+    - if flash.any?
+      .container
+        = flash_messages
 
     - if current_page?(root_url)
       %header

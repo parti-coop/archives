@@ -1,5 +1,6 @@
 class ArchivesController < ApplicationController
-  before_action :set_archive, only: [:show, :edit, :update, :destroy]
+  load_and_authorize_resource
+
   def index
     @archives = Archive.page(params[:page])
   end
@@ -27,6 +28,7 @@ class ArchivesController < ApplicationController
     if @archive.save
       redirect_to @archive
     else
+      errors_to_flash_now(@archive)
       render "new"
     end
   end
@@ -38,6 +40,7 @@ class ArchivesController < ApplicationController
     if @archive.update(archive_params)
       redirect_to @archive
     else
+      errors_to_flash_now(@archive)
       render "edit"
     end
   end
@@ -46,7 +49,7 @@ class ArchivesController < ApplicationController
     if @archive.update(archive_params)
       redirect_to @archive
     else
-      errors_to_flash(@archive)
+      errors_to_flash_now(@archive)
       render 'edit_categories'
     end
   end
@@ -58,13 +61,9 @@ class ArchivesController < ApplicationController
 
   private
 
-  def set_archive
-    @archive = Archive.find(params[:id])
-  end
-
   def archive_params
     params.require(:archive).permit(
-      :title, :body, :cover_image, :sns_image,
+      :title, :body, :cover_image, :sns_image, :slug,
       categories_attributes: [ :id, :slug, :name, :desc, :_destroy, children_attributes: [ :archive_id, :id, :slug, :name, :desc, :_destroy ] ]
     )
   end

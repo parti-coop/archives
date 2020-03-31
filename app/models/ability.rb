@@ -6,7 +6,7 @@ class Ability
     can [:download], ArchiveDocument
 
     if user
-      if user.has_role? :admin
+      if user.admin?
         can :manage, :all
       end
     end

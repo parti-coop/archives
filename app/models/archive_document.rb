@@ -16,12 +16,10 @@ class ArchiveDocument < ApplicationRecord
   belongs_to :category, class_name: 'ArchiveCategory', optional: true, primary_key: :slug, foreign_key: :category_slug
   has_one :clypit, dependent: :destroy
   has_one :sewol_inv_document, dependent: :nullify, class_name: 'Archive::SewolInvDocument'
-  has_one :additional, class_name: 'NposAddtionalArchiveDocument'
-  accepts_nested_attributes_for :additional
 
   attr_accessor :google_access_token
 
-  # mount_uploader :content, PrivateFileUploader
+  has_one_attached :content
 
   validates :title, presence: true
   validates :body, presence: true

@@ -6,7 +6,7 @@ class Archive < ApplicationRecord
   has_many :subcategories, -> { where.not parent: nil }, class_name: 'ArchiveCategory'
   has_many :bulk_tasks, dependent: :destroy
 
-  # accepts_nested_attributes_for :categories, allow_destroy: true
+  accepts_nested_attributes_for :categories, allow_destroy: true
 
   # mount_uploader :cover_image, ImageUploader
   # mount_uploader :social_image, ImageUploader
@@ -24,7 +24,7 @@ class Archive < ApplicationRecord
   #   (documents.collect{|d| d.user} + [user]).uniq
   # end
 
-  # def category_by_slug(slug)
-  #   all_categories.find_by(slug: slug)
-  # end
+  def category_by_slug(slug)
+    all_categories.find_by(slug: slug)
+  end
 end

@@ -12,16 +12,19 @@
   - if params[:category_slug].present?
     = f.hidden_field :category_slug, value: params[:category_slug]
   - else
-    .form-group
-      = f.label :category_slug
-      = f.select :category_slug, [], {}, class: 'form-control' do
-        - @archive_document.archive.categories.each do |category|
-          %optgroup{ label: category.name }
-          - category.children.each do |subcategory|
-            %option{ value: subcategory.slug, selected: subcategory.slug == f.object.category_slug }
-              = subcategory.slug
-              \-
-              = subcategory.name
+    - if @archive_document.archive.categories.any?
+      .form-group
+        = f.label :category_slug
+        = f.select :category_slug, [], {}, {class: 'form-control'} do
+          - @archive_document.archive.categories.each do |category|
+            %optgroup{ label: category.name }
+            - category.children.each do |subcategory|
+              %option{ value: subcategory.slug, selected: subcategory.slug == f.object.category_slug }
+                = subcategory.slug
+                \-
+                = subcategory.name
+    - else
+      = f.hidden_field :category_slug
 
   .form-group
     = f.label :tag_list
@@ -34,7 +37,6 @@
   .form-group
     = f.label :content
     = f.file_field :content, class: 'form-control'
-    = f.hidden_field :content_cache, value: f.object.content_cache
     .help-block
     - if @archive_document.read_attribute(:content).present?
       - if @archive_document.image?
