@@ -1,8 +1,6 @@
 branch-defaults:
   master:
     environment: archives-prod-env
-  circleci-project-setup:
-    environment: archives-prod-env
 global:
   application_name: archives
   default_ec2_keyname: archives
