@@ -1,0 +1,11 @@
+branch-defaults:
+  master:
+    environment: archives-prod-env
+  circleci-project-setup:
+    environment: archives-prod-env
+global:
+  application_name: archives
+  default_ec2_keyname: archives
+  default_platform: Puma with Ruby 2.6 running on 64bit Amazon Linux/2.11.4
+  default_region: ap-northeast-2
+  sc: git
