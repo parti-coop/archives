@@ -1,0 +1,24 @@
+branch-defaults:
+  master:
+    environment: archives-prod-env
+environment-defaults:
+  archives-prod:
+    branch: null
+    repository: null
+  archives-prod-env:
+    branch: null
+    repository: null
+global:
+  application_name: archives
+  branch: null
+  default_ec2_keyname: demosx
+  default_platform: Ruby 2.6 (Puma)
+  default_region: ap-northeast-2
+  include_git_submodules: true
+  instance_profile: null
+  platform_name: null
+  platform_version: null
+  profile: null
+  repository: null
+  sc: git
+  workspace_type: Application
