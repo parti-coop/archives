@@ -1,11 +1,8 @@
 branch-defaults:
   master:
-    environment: archives-prod-env
+    environment: archives-prod2-env
 environment-defaults:
-  archives-prod:
-    branch: null
-    repository: null
-  archives-prod-env:
+  archives-prod2-env:
     branch: null
     repository: null
 global:

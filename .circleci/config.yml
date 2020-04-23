@@ -17,7 +17,7 @@ jobs:
             sudo pip install awsebcli --upgrade
       - run:
           name: Deploying
-          command: eb deploy archives-prod-env
+          command: eb deploy archives-prod2-env
 
 workflows:
   build:
