@@ -1,21 +1,19 @@
 branch-defaults:
   master:
-    environment: archives-prod2-env
+    environment: archives-env
 environment-defaults:
-  archives-prod2-env:
+  archives-prod3-env:
     branch: null
     repository: null
 global:
   application_name: archives
-  branch: null
-  default_ec2_keyname: demosx
-  default_platform: Ruby 2.6 (Puma)
+  default_ec2_keyname: datapublic
+  default_platform: Puma with Ruby 2.6 running on 64bit Amazon Linux
   default_region: ap-northeast-2
   include_git_submodules: true
   instance_profile: null
   platform_name: null
   platform_version: null
   profile: null
-  repository: null
   sc: git
   workspace_type: Application
