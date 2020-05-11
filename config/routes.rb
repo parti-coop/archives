@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  root 'archives#index'
-
   devise_for :users
 
   resources :archives do
@@ -13,4 +11,8 @@ Rails.application.routes.draw do
   resources :archive_documents do
     get :download, on: :member
   end
+
+  get 'pages/about', as: 'about'
+
+  root 'archives#index'
 end
