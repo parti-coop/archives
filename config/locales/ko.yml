@@ -14,7 +14,7 @@ ko:
         password: 비밀번호
         password_confirmation: 비밀번호 확인
 
-  site_name: 아카이브즈
+  site_name: 빠띠 아카이브즈
   menu:
     archives: 전체목록
     tags: 태그
